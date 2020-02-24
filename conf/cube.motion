@@ -1,0 +1,29 @@
+daemon on
+
+videodevice /dev/video0
+width 480
+height 234
+
+framerate 4
+threshold 1500
+despeckle_filter EedDl
+minimum_motion_frames 1
+; noise_level 32
+
+on_motion_detected /data/cube/scripts/motion-detected.sh
+
+log_level 4
+log_file /var/log/motion/motion.log
+
+input -1
+v4l2_palette 15
+
+stream_port 0
+emulate_motion off
+movie_output off
+movie_output_motion off
+picture_output off
+picture_output_motion off
+webcontrol_port 0
+
+
