@@ -9,7 +9,7 @@ if [ ! -f $HISTORY_FILE ]; then
     chmod 666 $HISTORY_FILE
 fi
 
-typeset -i THEN=$(cat $HISTORY_FILE)
+typeset -i THEN=$(tail -1 $HISTORY_FILE)
 echo $NOW > $HISTORY_FILE
 
 BACKOFF=$(( $THEN + $RATE_LIMIT ))
