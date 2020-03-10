@@ -15,19 +15,19 @@ fi
 mkdir -p $DIR
 mv * $DIR
 
-## install service
+## install control server
 echo "installing control server..."
 ln -s $DIR/service/cube-control-server.service /etc/systemd/system/cube-control-server.service
 systemctl daemon-reload
 systemctl enable cube-control-server.service
-service cube start
+service cube-control-server start
 
 ## install network monitor
 echo "installing network monitor..."
-ln -s $DIR/service/cube-network-monitor.service /etc/systemd/system/network-monitor.service
+ln -s $DIR/service/cube-network-monitor.service /etc/systemd/system/cube-network-monitor.service
 systemctl daemon-reload
-systemctl enable network-monitor.service
-service cube start
+systemctl enable cube-network-monitor.service
+service cube-network-monitor start
 
 ## create user
 echo "creating '$USER' user..."
