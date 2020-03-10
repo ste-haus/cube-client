@@ -1,0 +1,8 @@
+---
+- name: Fix Surface Pro 3 powersave bug
+  when: "'surfacepro3' in group_names"
+  lineinfile:
+    path: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+    regexp: 'wifi.powersave.*'
+    line: 'wifi.powersave = 2'
+- include_tasks: motion.yml

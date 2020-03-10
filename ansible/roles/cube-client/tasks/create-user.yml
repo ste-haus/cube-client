@@ -1,0 +1,22 @@
+---
+- name: Create cube user
+  user:
+    state: present
+    name: "{{ cube_client_user }}"
+    password: "{{ cube_client_password | password_hash('sha512') }}"
+- name: Grant user reboot privileges
+  lineinfile:
+    path: /etc/sudoers
+    line: "{{ cube_client_user }} ALL=(ALL) NOPASSWD: /usr/sbin/reboot"
+    create: yes
+    validate: 'visudo -cf %s'
+- name: Enable auto-login
+  lineinfile:
+    path: /etc/gdm3/custom.conf
+    regexp: '#\s*AutomaticLoginEnable\s*=\s*.*'
+    line: 'AutomaticLoginEnable = True'
+- name: Set auto-login user
+  lineinfile:
+    path: /etc/gdm3/custom.conf
+    regexp: '#\s*AutomaticLogin\s*=\s*.*'
+    line: "AutomaticLogin = {{ cube_client_user }}"

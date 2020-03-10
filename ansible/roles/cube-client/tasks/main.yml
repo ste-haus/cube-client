@@ -1,0 +1,13 @@
+---
+- include_tasks: grub.yml
+- include_tasks: create-user.yml
+- include_tasks: sleep-settings.yml
+- include_tasks: services.yml
+- include_tasks: control-server.yml
+- include_tasks: cube-client.yml
+- include_tasks: set-resolution.yml
+- name: Setup Surface Pro 3
+  when: "'surfacepro3' in group_names"
+  include_tasks: surface-pro-3.yml
+- name: Reboot host
+  reboot: ~

@@ -1,0 +1,5 @@
+---
+- name: Disable bluetooth service
+  systemd:
+    name: bluetooth.service
+    state: stopped

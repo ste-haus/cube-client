@@ -1,0 +1,65 @@
+- name: Install xdotool
+  apt: name=xdotool state=latest
+- name: Install git
+  apt: name=git state=latest
+- name: Install net-tools
+  apt: name=net-tools state=latest
+- name: Clone control server
+  git:
+    force: yes
+    repo: "{{ cube_control_server_repo }}"
+    dest: "{{ cube_control_server_path }}"
+
+- name: Set control server script location
+  lineinfile:
+    path: "{{ cube_control_server_path }}/service/cube-control-server.service"
+    regexp: 'ExecStart\s*=.*'
+    line: 'ExecStart={{ cube_control_server_path }}/scripts/control-server.sh'
+- name: Set network monitor script location
+  lineinfile:
+    path: "{{ cube_control_server_path }}/service/cube-network-monitor.service"
+    regexp: 'ExecStart\s*=.*'
+    line: 'ExecStart={{ cube_control_server_path }}/scripts/network-monitor.sh'
+- name: Set Cube URL
+  lineinfile:
+    path: "{{ cube_control_server_path }}/scripts/control-server.sh"
+    regexp: 'CUBE_URL=.*'
+    line: "CUBE_URL={{ cube_url }}"
+- name: Set Cube port
+  lineinfile:
+    path: "{{ cube_control_server_path }}/scripts/control-server.sh"
+    regexp: 'PORT=.*'
+    line: "PORT={{ cube_control_server_port }}"
+- name: Set network monitor frequency
+  lineinfile:
+    path: "{{ cube_control_server_path }}/scripts/network-monitor.sh"
+    regexp: 'FREQUENCY='
+    line: "FREQUENCY={{ cube_network_monitor_frequency }}"
+
+- name: Link control server service
+  file:
+    src: "{{ cube_control_server_path }}/service/cube-control-server.service"
+    dest: "/etc/systemd/system/cube-control-server.service"
+    state: link
+- name: Link network monitor service
+  file:
+    src: "{{ cube_control_server_path }}/service/cube-network-monitor.service"
+    dest: "/etc/systemd/system/cube-network-monitor.service"
+    state: link
+
+- name: Reload systemctl daemon
+  systemd:
+    daemon_reload: yes
+
+- name: Enable control server
+  systemd:
+    name: cube-control-server
+    enabled: yes
+    state: started
+- name: Enable network monitor
+  systemd:
+    name: cube-network-monitor
+    enabled: yes
+    state: started
+  async: 100
+  poll: 0

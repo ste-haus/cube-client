@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Cube browser window
+Exec=/data/cube-client/scripts/cube-client-autostart.sh
+OnlyShowIn=GNOME
+StartupNotify=false
+X-GNOME-Autostart-enabled=true

@@ -1,0 +1,7 @@
+---
+- hosts: cubes
+  become: true
+  roles:
+    - apt
+    - python
+    - cube-client

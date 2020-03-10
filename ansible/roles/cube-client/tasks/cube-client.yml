@@ -1,0 +1,42 @@
+---
+- name: Install Google signing key
+  shell: 'wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -'
+  args:
+    warn: no
+- name: Add Google chrome source
+  lineinfile:
+    path: /etc/apt/sources.list.d/google-chrome.list
+    line: 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
+    create: yes
+- name: Update apt
+  apt: update_cache=yes
+- name: Install Chrome
+  apt: name=google-chrome-stable state=latest 
+
+- name: Create cube-client directory
+  file:
+    path: "{{ cube_client_path }}"
+    state: directory
+- name: Copy autostart script
+  copy: 
+    src: autostart.sh
+    dest: "{{ cube_client_path }}/autostart.sh"
+    mode: '0755'
+- name: Set autostart control server port
+  lineinfile:
+    path: "{{ cube_client_path }}/autostart.sh"
+    regexp: 'CONTROL_SERVER_PORT=.*'
+    line: 'CONTROL_SERVER_PORT={{ cube_control_server_port }}'
+- name: Create autostart directory
+  file:
+    path: "/home/{{ cube_client_user }}/.config/autostart"
+    state: directory
+- name: Autostart cube client
+  copy: 
+    src: cube-client.desktop
+    dest: "/home/{{ cube_client_user }}/.config/autostart/cube-client.desktop"
+- name: Set autostart script location
+  lineinfile:
+    path: "/home/{{ cube_client_user }}/.config/autostart/cube-client.desktop"
+    regexp: 'Exec=.*'
+    line: 'Exec={{ cube_client_path }}/autostart.sh'

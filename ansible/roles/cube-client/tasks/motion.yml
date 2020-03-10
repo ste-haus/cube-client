@@ -1,0 +1,28 @@
+---
+- name: Install motion
+  apt: name=motion state=latest
+- name: Copy motion config
+  copy: 
+    src: motion.conf
+    dest: "/etc/motion/motion.conf"
+    mode: '0755'
+- name: Copy motion script
+  copy: 
+    src: motion-detected.sh
+    dest: "{{ cube_client_path }}/motion-detected.sh"
+    mode: '0755'
+- name: Set motion control server port
+  lineinfile:
+    path: "{{ cube_client_path }}/motion-detected.sh"
+    regexp: 'CONTROL_SERVER_PORT=.*'
+    line: 'CONTROL_SERVER_PORT={{ cube_control_server_port }}'
+- name: Set motion script location
+  lineinfile:
+    path: "/etc/default/motion"
+    regexp: 'start_motion_daemon\s*=\s*.*'
+    line: 'start_motion_daemon=yes'
+- name: Set motion script location
+  lineinfile:
+    path: "/etc/motion/motion.conf"
+    regexp: 'on_motion_detected.*'
+    line: 'on_motion_detected {{ cube_client_path }}/motion-detected.sh'

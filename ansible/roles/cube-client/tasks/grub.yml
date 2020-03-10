@@ -1,0 +1,19 @@
+---
+- name: Set grub timeout
+  lineinfile:
+    path: /etc/default/grub
+    regexp: 'GRUB_TIMEOUT='
+    line: 'GRUB_TIMEOUT=5'
+- name: Set grub recordfail timeout
+  lineinfile:
+    path: /etc/default/grub
+    regexp: 'GRUB_RECORDFAIL_TIMEOUT='
+    line: 'GRUB_RECORDFAIL_TIMEOUT=6'
+    insertafter: 'GRUB_TIMEOUT='
+- name: Set grub timout visible
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_TIMEOUT_STYLE='
+    line: '#GRUB_TIMEOUT_STYLE=hidden'
+- name: Update grub
+  shell: update-grub

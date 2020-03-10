@@ -1,0 +1,13 @@
+---
+cube_url: http://cube#touch
+
+cube_client_path: /data/cube-client
+cube_client_user: cube
+cube_client_password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+cube_client_resolution: 1400x900
+
+cube_control_server_repo: https://github.com/ste-haus/control-server.git
+cube_control_server_path: /data/control-server
+cube_control_server_port: '4444'
+
+cube_network_monitor_frequency: 5

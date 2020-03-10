@@ -1,0 +1,15 @@
+---
+- name: Check if user is logged in
+  block:
+    - name: Set resolution
+      become_user: "{{ cube_client_user }}"
+      shell: "export DISPLAY=:0.0 && xrandr --size {{ cube_client_resolution }}"
+  rescue:
+    - debug:
+        msg: 'Rebooting system to log user in'
+    - reboot:
+#        post_reboot_delay: 30
+        test_command: 'who | grep "^{{ cube_client_user }}\\s\+"'
+    - name: Set resolution
+      become_user: "{{ cube_client_user }}"
+      shell: "export DISPLAY=:0.0 && xrandr --size {{ cube_client_resolution }}"
