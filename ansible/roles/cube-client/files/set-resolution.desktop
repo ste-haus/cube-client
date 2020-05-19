@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Set resolution
+Exec=bash -c "xrandr --size 1400x900"
+OnlyShowIn=GNOME
+StartupNotify=false
+X-GNOME-Autostart-enabled=true

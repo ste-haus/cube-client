@@ -1,0 +1,7 @@
+---
+- name: Set desktop background to none
+  become_user: "{{ cube_client_user }}"
+  shell: "export DISPLAY=:0.0 && gsettings set org.gnome.desktop.background picture-uri ''"
+- name: Set desktop background colour to black
+  become_user: "{{ cube_client_user }}"
+  shell: "export DISPLAY=:0.0 && gsettings set org.gnome.desktop.background primary-color '#000000'"

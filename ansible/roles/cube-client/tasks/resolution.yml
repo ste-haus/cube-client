@@ -1,0 +1,9 @@
+---
+- name: Create autostart directory
+  file:
+    path: "/home/{{ cube_client_user }}/.config/autostart"
+    state: directory
+- name: Set resolution at login
+  copy: 
+    src: set-resolution.desktop
+    dest: "/home/{{ cube_client_user }}/.config/autostart/set-resolution.desktop"

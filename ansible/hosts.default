@@ -1,0 +1,16 @@
+[cubes]
+cube-xxxx
+cube-yyyy
+cube-zzzz
+
+[surface_pro_3]
+cube-xxxx
+cube-yyyy
+cube-zzzz
+
+[on_device_motion]
+cube-xxxx
+cube-yyyy
+
+[quick_idle]
+cube-zzzz

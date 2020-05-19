@@ -1,8 +1,9 @@
 ---
+- name: Disable screen rotation
+  become_user: "{{ cube_client_user }}"
+  shell: 'export DISPLAY=:0.0 && gsettings set org.gnome.settings-daemon.peripherals.touchscreen orientation-lock true'
 - name: Fix Surface Pro 3 powersave bug
-  when: "'surfacepro3' in group_names"
   lineinfile:
     path: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
     regexp: 'wifi.powersave.*'
     line: 'wifi.powersave = 2'
-- include_tasks: motion.yml

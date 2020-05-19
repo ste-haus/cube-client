@@ -1,1 +1,3 @@
+hosts
+roles/cube-client/defaults/main.yml
 ssh

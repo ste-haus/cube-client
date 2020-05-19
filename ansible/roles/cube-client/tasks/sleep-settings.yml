@@ -25,19 +25,7 @@
     state: present
 - name: Disable lock screen
   become_user: "{{ cube_client_user }}"
-  shell: 'gsettings set org.gnome.desktop.screensaver lock-enabled false'
-- name: Install gnome-tweaks
-  apt: name=gnome-tweaks state=latest
-- name: Install git
-  apt: name=git state=latest
-- name: Clone screenshield extension
+  shell: 'export DISPLAY=:0.0 && gsettings set org.gnome.desktop.screensaver lock-enabled false'
+- name: Disable lock screen with a vengeance
   become_user: "{{ cube_client_user }}"
-  git:
-    repo: https://github.com/lgpasquale/gnome-shell-extension-disable-screenshield.git
-    dest: "/home/{{ cube_client_user }}/.local/share/gnome-shell/extensions/disable-screenshield@lgpasquale.com"
-- name: Disable screenshield
-  become_user: "{{ cube_client_user }}"
-  dconf:
-    key: /org/gnome/shell/enabled-extensions
-    value: "['disable-screenshield@lgpasquale.com']"
-    state: present
+  shell: 'export DISPLAY=:0.0 && gsettings set org.gnome.desktop.lockdown disable-lock-screen true'

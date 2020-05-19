@@ -1,0 +1,29 @@
+---
+- name: Install Gnome shell extenstion
+  apt: name=gnome-shell-extensions state=latest
+- name: Enable user themes
+  become_user: "{{ cube_client_user }}"
+  shell: 'export DISPLAY=:0.0 && gnome-extensions enable "user-theme@gnome-shell-extensions.gcampax.github.com"'
+- name: Create theme directory
+  file:
+    path: "/home/{{ cube_client_user }}/.themes/cube/gnome-shell/"
+    state: directory
+- name: Copy theme
+  copy:
+    src: gnome-shell.css
+    dest: "/home/{{ cube_client_user }}/.themes/cube/gnome-shell/gnome-shell.css" 
+- name: Set theme
+  become_user: "{{ cube_client_user }}"
+  shell: 'export DISPLAY=:0.0 && gsettings set org.gnome.shell.extensions.user-theme name "cube"'
+- name: Install gnome-tweaks
+  apt: name=gnome-tweaks state=latest
+- name: Install git
+  apt: name=git state=latest
+- name: Clone screenshield extension
+  become_user: "{{ cube_client_user }}"
+  git:
+    repo: https://github.com/lgpasquale/gnome-shell-extension-disable-screenshield.git
+    dest: "/home/{{ cube_client_user }}/.local/share/gnome-shell/extensions/disable-screenshield@lgpasquale.com"
+- name: Disable screenshield
+  become_user: "{{ cube_client_user }}"
+  shell: 'export DISPLAY=:0.0 && gnome-extensions enable "disable-screenshield@lgpasquale.com"'

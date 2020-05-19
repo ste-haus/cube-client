@@ -1,0 +1,7 @@
+---
+- name: Set quick idle delay
+  become_user: "{{ cube_client_user }}"
+  dconf:
+    key: /org/gnome/desktop/session/idle-delay
+    value: "uint32 60"
+    state: present

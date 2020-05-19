@@ -3,11 +3,20 @@
 - include_tasks: create-user.yml
 - include_tasks: sleep-settings.yml
 - include_tasks: services.yml
+- include_tasks: printer.yml
 - include_tasks: control-server.yml
 - include_tasks: cube-client.yml
-- include_tasks: set-resolution.yml
+- include_tasks: gnome-tweaks.yml
+- include_tasks: background.yml
+- include_tasks: resolution.yml
 - name: Setup Surface Pro 3
-  when: "'surfacepro3' in group_names"
+  when: "'surface_pro_3' in group_names"
   include_tasks: surface-pro-3.yml
+- name: Setup motion detection
+  when: "'on_device_motion' in group_names"
+  include_tasks: motion.yml
+- name: Set quick screen idling
+  when: "'quick_idle' in group_names"
+  include_tasks: quick-idle.yml
 - name: Reboot host
   reboot: ~

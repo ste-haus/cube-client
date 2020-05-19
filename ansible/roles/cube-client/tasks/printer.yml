@@ -1,0 +1,6 @@
+---
+- name: Disable printer discovery
+  systemd:
+    name: cups-browsed
+    enabled: no
+    state: stopped
