@@ -1,0 +1,9 @@
+---
+- name: Add known hosts to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*{{ item.host }}$'
+    line: "{{ item.ip }} {{ item.host }}"
+    state: present
+  when: known_hosts is defined
+  with_items: "{{ known_hosts }}"

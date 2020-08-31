@@ -1,0 +1,10 @@
+---
+- name: Disable ambient light sensor
+  become_user: "{{ cube_client_user }}"
+  shell: "export DISPLAY=:0.0 && gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled 'false'"
+- name: Install xbacklight
+  apt: name=xbacklight state=latest
+- name: Autoset brightness
+  copy:
+    src: screen-brightness.desktop
+    dest: "/home/{{ cube_client_user }}/.config/autostart/screen-brightness.desktop"

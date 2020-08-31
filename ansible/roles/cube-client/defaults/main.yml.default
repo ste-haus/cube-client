@@ -11,3 +11,7 @@ cube_control_server_path: /data/control-server
 cube_control_server_port: '4444'
 
 cube_network_monitor_frequency: 5
+
+known_hosts:
+  - host: ~
+      ip: ~

@@ -1,4 +1,5 @@
 ---
+- include_tasks: etc-hosts.yml
 - include_tasks: grub.yml
 - include_tasks: create-user.yml
 - include_tasks: sleep-settings.yml
@@ -9,6 +10,7 @@
 - include_tasks: gnome-tweaks.yml
 - include_tasks: background.yml
 - include_tasks: resolution.yml
+- include_tasks: screen-brightness.yml
 - name: Setup Surface Pro 3
   when: "'surface_pro_3' in group_names"
   include_tasks: surface-pro-3.yml

@@ -19,5 +19,7 @@
         * `chown 700 /home/ansible/.ssh`
     2. Set the `authorized_keys` directory permissions:
         * `chown 600 /home/ansible/.ssh/authorized_keys`
-6. Run the playbook: `ansible-playbook cube-client.yml`
+6. Run the playbook: 
+    1. Against all hosts: `ansible-playbook cube-client.yml`
+    2. Against a single host: `ansible-playbook cube-client.yml -l cube-XXXX`
 7. Sometimes some `gsettings` configurations won't be properly applied if the `cube` user hasn't been logged in - in that case, repeat Step 6.
