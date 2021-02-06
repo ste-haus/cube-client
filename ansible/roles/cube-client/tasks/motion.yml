@@ -1,6 +1,8 @@
 ---
 - name: Install motion
   apt: name=motion state=latest
+- name: Install curl
+  apt: name=curl state=latest
 - name: Copy motion config
   copy: 
     src: motion.conf
@@ -16,6 +18,11 @@
     path: "{{ cube_client_path }}/motion-detected.sh"
     regexp: 'CONTROL_SERVER_PORT=.*'
     line: 'CONTROL_SERVER_PORT={{ cube_control_server_port }}'
+- name: Set motion control server port
+  lineinfile:
+    path: "{{ cube_client_path }}/motion-detected.sh"
+    regexp: 'MOTION_NOTIFICATION_ENDPOINT=.*'
+    line: 'MOTION_NOTIFICATION_ENDPOINT="{{ motion_notification_endpoint }}"'
 - name: Set motion script location
   lineinfile:
     path: "/etc/default/motion"

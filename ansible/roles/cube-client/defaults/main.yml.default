@@ -12,6 +12,8 @@ cube_control_server_port: '4444'
 
 cube_network_monitor_frequency: 5
 
+motion_notification_endpoint: ~
+
 known_hosts:
   - host: ~
       ip: ~
